@@ -19,4 +19,17 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 12. .then console result.user
 13. or .catch error and console.error error
 
-## 
+
+
+## Steps to toggle between Login and Register in the Same Form
+
+1. at first we can show the error when existing user clicks on to register again,
+2. Add a Check box to the form to confirm already registered or not
+3. add an onChange event to handle register change with handler function, in function take event as parameter and check changes in Console using event.target.checked
+4. Now declare a State for Registered and SetRegister, and onChange of checkbox setRegister with the return of true or false value of event.target.checked 
+5. Next Use Register State to conditionally Render Form Hading Between (Please Register) and (Please Login) , and Same with the button Text..
+6. Go to Docs in Firebase > build > web > password Authentication 
+7. Notice we are using createUserWithEmailAndPassword, in password Authentication Notice another function to signInWithEmailAndPassword to Login
+8. Use Register state with Condition to use Functions Automatically according to state
+9. In that way we can dodge the Firebase error of User already in Use...
+
