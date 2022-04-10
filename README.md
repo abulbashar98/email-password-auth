@@ -14,5 +14,9 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 7. Create auth variable in App.js e.g(const auth = getAuth(app))
 8. Go to Docs > build > authentication > Password Authentication
 9. Create Form and input fields to Receive email and password
+10. or get a form From React Bootstrap with Imports, onBlur of email and password fields seState of email and password
+11. Then onSubmit prevent default behavior o form and createUserWithEmailAndPassword() send auth, email state and password state as parameters
+12. .then console result.user
+13. or .catch error and console.error error
 
 ## 
