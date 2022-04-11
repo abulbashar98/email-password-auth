@@ -1,4 +1,4 @@
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendEmailVerification, sendPasswordResetEmail } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendEmailVerification, sendPasswordResetEmail, updateProfile } from "firebase/auth";
 import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Form from 'react-bootstrap/Form'
@@ -9,8 +9,9 @@ import app from "./firebase.init";
 const auth = getAuth(app);
 
 function App() {
-  const [error, setError] = useState('')
-  const [register, setRegister] = useState(false)
+  const [error, setError] = useState('');
+  const [name, setName] = useState('');
+  const [registered, setRegister] = useState(false);
   const [validated, setValidated] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -21,6 +22,10 @@ function App() {
 
   const handlePasswordOnBlur = (event) => {
     setPassword(event.target.value)
+  }
+
+  const handleNameOnBlur = (event) => {
+    setName(event.target.value)
   }
 
 
@@ -47,7 +52,7 @@ function App() {
 
     console.log('form Submitted')
 
-    if (register) {
+    if (registered) {
       signInWithEmailAndPassword(auth, email, password)
         .then(result => {
           const user = result.user;
@@ -65,6 +70,7 @@ function App() {
           console.log(user)
           setError('')
           verifyEmail();
+          updateUsersProfile();
         })
 
         .catch(error => {
@@ -85,6 +91,9 @@ function App() {
       })
   }
 
+
+
+
   const verifyEmail = () => {
     sendEmailVerification(auth.currentUser)
       .then(() => {
@@ -95,11 +104,32 @@ function App() {
       })
   }
 
+  const updateUsersProfile = () => {
+    updateProfile(auth.currentUser, {
+      displayName: name
+    })
+      .then(() => {
+        console.log('profile updated')
+      })
+      .catch(error => {
+        setError(error.message)
+      })
+  }
+
 
   return (
     <div className="w-50 mx-auto mt-5">
-      <h1 className="text-primary">Please {register ? 'Login' : 'Register'}</h1>
+      <h1 className="text-primary">Please {registered ? 'Login' : 'Register'}</h1>
       <Form noValidate validated={validated} onSubmit={handleFormSubmit}>
+        {!registered && <Form.Group className="mb-3" controlId="formBasicEmail">
+          <Form.Label>Your Name</Form.Label>
+          <Form.Control onBlur={handleNameOnBlur} type="text" placeholder="Your Name" required />
+          <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+          <Form.Control.Feedback type="invalid">
+            Please provide your name.
+          </Form.Control.Feedback>
+        </Form.Group>}
+
         <Form.Group className="mb-3" controlId="formBasicEmail">
           <Form.Label>Email address</Form.Label>
           <Form.Control onBlur={handleEmailOnBlur} type="email" placeholder="Enter email" required />
@@ -125,7 +155,7 @@ function App() {
         <p className="text-danger">{error}</p>
         <Button onClick={handleResetPassword} variant="link">Forget Password?</Button>
         <Button variant="primary" type="submit">
-          {register ? 'Login' : "Register"}
+          {registered ? 'Login' : "Register"}
         </Button>
       </Form>
     </div >
