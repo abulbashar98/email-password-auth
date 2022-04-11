@@ -31,5 +31,24 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 6. Go to Docs in Firebase > build > web > password Authentication 
 7. Notice we are using createUserWithEmailAndPassword, in password Authentication Notice another function to signInWithEmailAndPassword to Login
 8. Use Register state with Condition to use Functions Automatically according to state
-9. In that way we can dodge the Firebase error of User already in Use...
+9. In that way we can dodge the Firebase error of User already in Use....
+
+
+
+
+## steps to create Email Verification....
+
+1. Go to authentication from home page > templates > Email Address Verification, Notice this template..
+2. Now  Go to Docs > build > authentication > web > manege users > send a user verification email... link (https://firebase.google.com/docs/auth/web/manage-users?hl=en&authuser=0#send_a_user_a_verification_email)
+3. Now When do we do this? we send a verification email when the User Registers for the first time, So we will use this verification function inside Register function....
+4. Now use a genuine Email to register, Notice in console for user that emailVerified is false at this Point....
+5. Now verify the email using template link in your email account, Check spam if not found,
+6. now check as already Register, Login With same Email Again and Notice emailVerified = true;  
+
+## steps to Create Reset Password function.....
+
+1. Go to authentication from home page > templates >Password Reset , Notice this template..
+2. Now  Go to Docs > build > authentication > web > manege users > send a Password Reset email... link (https://firebase.google.com/docs/auth/web/manage-users?hl=en&authuser=0#send_a_password_reset_email)
+3. create a link button, onClick handle Reset Password Function , Inside Handler Function 
+use sendPasswordResetEmail with auth and email parameters as shown in link....
 
